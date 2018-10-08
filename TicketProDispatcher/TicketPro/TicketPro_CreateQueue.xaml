@@ -1,0 +1,328 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="TicketPro_CreateQueue"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_Department" Type="InArgument(x:Int32)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>TicketPro_CreateQueue_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Core</AssemblyReference>
+      <AssemblyReference>UiPath.Core.Activities</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Preconditions: &#xA; - TicketPRO logged in&#xA;&#xA;Arguments:&#xA; - Department name (private (1), business (2), internal (3))&#xA;&#xA;Completion state:&#xA; - Queue created in Orchestrator" DisplayName="TicketPro_CreateQueue" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="scg:List(x:String)" Name="NameList" />
+      <Variable x:TypeArguments="scg:List(x:String)" Name="UniqueNameList" />
+      <Variable x:TypeArguments="x:String" Name="DepartmentName" />
+    </Sequence.Variables>
+    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Navigate file" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="TicketPro\TicketPro_Navigate.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_Department">[in_Department]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_MenuItem">queue</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="Starting to create queue" />
+    <Switch x:TypeArguments="x:Int32" DisplayName="Switch Set correct department name" Expression="[in_Department]" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+      <Assign x:Key="1" sap2010:WorkflowViewState.IdRef="Assign_3">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[DepartmentName]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">private</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign x:Key="2" sap2010:WorkflowViewState.IdRef="Assign_4">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[DepartmentName]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">business</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign x:Key="3" sap2010:WorkflowViewState.IdRef="Assign_5">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[DepartmentName]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">internal</InArgument>
+        </Assign.Value>
+      </Assign>
+    </Switch>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg:List(x:String)">[NameList]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg:List(x:String)">[New List(Of String)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Trace" Message="Extracting data tables" />
+    <Sequence DisplayName="Data scraping" sap2010:WorkflowViewState.IdRef="Sequence_3">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="ExtractDataTable" />
+      </Sequence.Variables>
+      <ui:BrowserScope Browser="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Attach Browser 'TicketPRO Page'" sap2010:WorkflowViewState.IdRef="BrowserScope_1" InformativeScreenshot="f93c12ecc07b01b8abdf7076ead2d7f9" Selector="&lt;html app='chrome.exe' title='TicketPRO 2000' /&gt;">
+        <ui:BrowserScope.Body>
+          <ActivityAction x:TypeArguments="x:Object">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_2">
+              <ui:ExtractData NextLinkSelector="{x:Null}" ContinueOnError="True" DataTable="[ExtractDataTable]" DelayBetweenPagesMS="300" DisplayName="Extract Structured Data 'TABLE'" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' /&gt;" sap2010:WorkflowViewState.IdRef="ExtractData_1" MaxNumberOfResults="0">
+                <ui:ExtractData.Target>
+                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="72507f4cb1e6dfe27ab71dd7cf29ea92" Selector="&lt;webctrl tag='TABLE' /&gt;" WaitForReady="COMPLETE" />
+                </ui:ExtractData.Target>
+              </ui:ExtractData>
+              <ui:ForEachRow DataTable="[ExtractDataTable]" DisplayName="For each row" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+                <ui:ForEachRow.Body>
+                  <ActivityAction x:TypeArguments="sd:DataRow">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                    </ActivityAction.Argument>
+                    <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                      <InvokeMethod DisplayName="Invoke method" sap2010:WorkflowViewState.IdRef="InvokeMethod_1" MethodName="Add">
+                        <InvokeMethod.TargetObject>
+                          <InArgument x:TypeArguments="scg:List(x:String)">[NameList]</InArgument>
+                        </InvokeMethod.TargetObject>
+                        <InArgument x:TypeArguments="x:String">[row.Item("Owner").ToString]</InArgument>
+                      </InvokeMethod>
+                    </Sequence>
+                  </ActivityAction>
+                </ui:ForEachRow.Body>
+              </ui:ForEachRow>
+            </Sequence>
+          </ActivityAction>
+        </ui:BrowserScope.Body>
+      </ui:BrowserScope>
+      <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Trace" Message="First data table extracted" />
+    </Sequence>
+    <ui:BrowserScope Browser="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Attach Browser 'chrome.exe TicketPRO'" sap2010:WorkflowViewState.IdRef="BrowserScope_3" InformativeScreenshot="044153488163191c884aa24f267d0dd5" Selector="&lt;html app='chrome.exe' title='TicketPRO 2000' /&gt;">
+      <ui:BrowserScope.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_10">
+            <ui:NavigateTo Browser="{x:Null}" DisplayName="Navigate to" sap2010:WorkflowViewState.IdRef="NavigateTo_1" Url="https://ticketpro.janove.io/#/archive" />
+          </Sequence>
+        </ActivityAction>
+      </ui:BrowserScope.Body>
+    </ui:BrowserScope>
+    <Sequence DisplayName="Data scraping" sap2010:WorkflowViewState.IdRef="Sequence_9">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="ExtractDataTable" />
+      </Sequence.Variables>
+      <ui:BrowserScope Browser="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Attach Browser 'TicketPRO Page'" sap2010:WorkflowViewState.IdRef="BrowserScope_2" InformativeScreenshot="f93c12ecc07b01b8abdf7076ead2d7f9" Selector="&lt;html app='chrome.exe' title='TicketPRO 2000' /&gt;">
+        <ui:BrowserScope.Body>
+          <ActivityAction x:TypeArguments="x:Object">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_8">
+              <ui:ExtractData NextLinkSelector="{x:Null}" ContinueOnError="True" DataTable="[ExtractDataTable]" DelayBetweenPagesMS="300" DisplayName="Extract Structured Data 'TABLE'" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' /&gt;" sap2010:WorkflowViewState.IdRef="ExtractData_2" MaxNumberOfResults="0">
+                <ui:ExtractData.Target>
+                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="72507f4cb1e6dfe27ab71dd7cf29ea92" Selector="&lt;webctrl tag='TABLE' /&gt;" WaitForReady="COMPLETE" />
+                </ui:ExtractData.Target>
+              </ui:ExtractData>
+              <ui:ForEachRow DataTable="[ExtractDataTable]" DisplayName="For each row" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+                <ui:ForEachRow.Body>
+                  <ActivityAction x:TypeArguments="sd:DataRow">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                    </ActivityAction.Argument>
+                    <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                      <InvokeMethod DisplayName="Invoke method" sap2010:WorkflowViewState.IdRef="InvokeMethod_2" MethodName="Add">
+                        <InvokeMethod.TargetObject>
+                          <InArgument x:TypeArguments="scg:List(x:String)">[NameList]</InArgument>
+                        </InvokeMethod.TargetObject>
+                        <InArgument x:TypeArguments="x:String">[row.Item("Owner").ToString]</InArgument>
+                      </InvokeMethod>
+                    </Sequence>
+                  </ActivityAction>
+                </ui:ForEachRow.Body>
+              </ui:ForEachRow>
+            </Sequence>
+          </ActivityAction>
+        </ui:BrowserScope.Body>
+      </ui:BrowserScope>
+      <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Trace" Message="Second data table extracted" />
+    </Sequence>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg:List(x:String)">[UniqueNameList]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg:List(x:String)">[NameList.Distinct().ToList]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:ForEach x:TypeArguments="x:Object" DisplayName="For each" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[UniqueNameList]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="name" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_6">
+            <ui:AddQueueItem ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Add queue item" sap2010:WorkflowViewState.IdRef="AddQueueItem_2" Priority="Normal" QueueType="[&quot;TicketPro_&quot;+DepartmentName]">
+              <ui:AddQueueItem.ItemInformation>
+                <InArgument x:TypeArguments="x:String" x:Key="name">[name.ToString]</InArgument>
+              </ui:AddQueueItem.ItemInformation>
+            </ui:AddQueueItem>
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
+    <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="Queue succesfully created" />
+    <sads:DebugSymbol.Symbol>d3VDOlxVc2Vyc1xzbmphYmxvblxEb2N1bWVudHNcR2l0SHViXFRpY2tldG1hc3RlclByb0Rpc3BhdGNoZXJcVGlja2V0UHJvRGlzcGF0Y2hlclxUaWNrZXRQcm9cVGlja2V0UHJvX0NyZWF0ZVF1ZXVlLnhhbWxPRgPqAQ4CAQFMBVEdAgFbUgVSjwECAVlTBWwOAgFKbQV0DgIBRnUFdY4BAgFEdgWcARACAS2dAQWoARcCASipAQXPARACARHQAQXXAQ4CAQ3YAQXnARICAQToAQXoAZABAgECT0RPSQIBX05FTlQCAV1MsQFM1AECAVxSclKMAQIBWlNjU3QCAUtUB1sQAgFVXAdjEAIBUWQHaxACAU1yOnJPAgFJbztvRQIBR3VzdYsBAgFFeDp4VwIBLnoHmgEZAgExmwEHmwGUAQIBL50BpgKdAd4CAgEsowELpQEWAgEpqwE6qwFXAgESrQEHzQEZAgEVzgEHzgGVAQIBE9UBOtUBVgIBENIBO9IBSwIBDtgBeNgBigECAQveAQvkARYCAQXoAXLoAY0BAgEDWTJZOQIBWFYzVkMCAVZhMmE6AgFUXjNeQwIBUmkyaToCAVBmM2ZDAgFOeqICetoCAgFDgAENlwEYAgEymwF1mwGRAQIBMKQBDaQBpgECASqtAaICrQHaAgIBJ7MBDcoBGAIBFs4Bdc4BkgECARTfAQ3jAR8CAQaBAQ+FASACATuGAQ+WAR8CATOkAXykAaMBAgErtAEPuAEgAgEfuQEPyQEfAgEX3wG7Ad8B5AECAQnhAUXhAVQCAQeBAdECgQHUAgIBQoMBogGDAcEBAgFBgQGFAYEBigECAUCBAUuBAVECAT+BAVyBAXACAT2BAckBgQGNAgIBPIYBKIYBPAIBOYwBFZMBIAIBNLQB0QK0AdQCAgEmtgGiAbYBwQECASW0AYUBtAGKAQIBJLQBS7QBUQIBI7QBXLQBcAIBIbQByQG0AY0CAgEguQEouQE8AgEdvwEVxgEgAgEYjQEXkgEmAgE1wAEXxQEmAgEZjwFMjwFWAgE3kQFAkQFcAgE2wgFMwgFWAgEbxAFAxAFcAgEa</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="476.8,88" />
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="476.8,92.8" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="243.2,60.8" />
+      <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="243.2,60.8" />
+      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="243.2,60.8" />
+      <sap2010:ViewStateData Id="Switch`1_1" sap:VirtualizedContainerService.HintSize="476.8,188.8" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="476.8,60.8" />
+      <sap2010:ViewStateData Id="LogMessage_2" sap:VirtualizedContainerService.HintSize="476.8,92.8" />
+      <sap2010:ViewStateData Id="ExtractData_1" sap:VirtualizedContainerService.HintSize="313.6,107.2" />
+      <sap2010:ViewStateData Id="InvokeMethod_1" sap:VirtualizedContainerService.HintSize="217.6,134.4" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="240,259.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEachRow_1" sap:VirtualizedContainerService.HintSize="313.6,408" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="336,680">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="BrowserScope_1" sap:VirtualizedContainerService.HintSize="414.4,827.2" />
+      <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="414.4,92.8" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="476.8,1084.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="NavigateTo_1" sap:VirtualizedContainerService.HintSize="313.6,59.2" />
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="336,184">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="BrowserScope_3" sap:VirtualizedContainerService.HintSize="476.8,331.2" />
+      <sap2010:ViewStateData Id="ExtractData_2" sap:VirtualizedContainerService.HintSize="313.6,107.2" />
+      <sap2010:ViewStateData Id="InvokeMethod_2" sap:VirtualizedContainerService.HintSize="217.6,134.4" />
+      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="240,259.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEachRow_2" sap:VirtualizedContainerService.HintSize="313.6,408" />
+      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="336,680">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="BrowserScope_2" sap:VirtualizedContainerService.HintSize="414.4,827.2" />
+      <sap2010:ViewStateData Id="LogMessage_4" sap:VirtualizedContainerService.HintSize="414.4,92.8" />
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="476.8,1084.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="476.8,60.8" />
+      <sap2010:ViewStateData Id="AddQueueItem_2" sap:VirtualizedContainerService.HintSize="200,22.4" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="222.4,147.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="476.8,281.6" />
+      <sap2010:ViewStateData Id="LogMessage_5" sap:VirtualizedContainerService.HintSize="476.8,92.8" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="499.2,4124">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TicketPro_CreateQueue_1" sap:VirtualizedContainerService.HintSize="539.2,4204" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
